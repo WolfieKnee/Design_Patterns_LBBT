@@ -2,6 +2,6 @@
 {
     internal interface ITaxCalculator
     {
-        double calculateTax(int price);
+        int calculateTotalTax(int price);
     }
 }

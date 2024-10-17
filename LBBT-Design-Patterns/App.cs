@@ -29,7 +29,7 @@ namespace LBBT_Design_Patterns
         }
 
         private void Run() { 
-            Console.WriteLine(_taxCalculator.calculateTax(_price));
+            Console.WriteLine("Tax on £"+ _price +" is "+_taxCalculator.calculateTotalTax(_price));
         }
     }
 }
