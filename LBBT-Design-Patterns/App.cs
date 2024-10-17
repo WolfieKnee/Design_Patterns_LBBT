@@ -12,10 +12,24 @@ namespace LBBT_Design_Patterns
     
     internal class App
     {
+        private int _price;
+        private ITaxCalculator _taxCalculator;
+
+        public App()
+        {
+            _price = 235000;
+            _taxCalculator = new LBBTCalculator();
+        }
+
+
         static void Main()
         {
-            ITaxCalculator anLBBTCalculator =  new LBBTCalculator(235000);
-            Console.WriteLine(anLBBTCalculator.calculateTax());
+            new App().Run();
+            
+        }
+
+        private void Run() { 
+            Console.WriteLine(_taxCalculator.calculateTax(_price));
         }
     }
 }
