@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 
 namespace LBBT_Design_Patterns
 {
-        internal class LBBTCalculator
+    internal class LBBTCalculator : ITaxCalculator
+    {
+        private int _housePrice;
+        public LBBTCalculator(int price)
         {
-            private int _housePrice;
-            public LBBTCalculator(int price) { 
-                _housePrice = price;
+            _housePrice = price;
+        }
+        public double calculateTax()
+        {
+            if (_housePrice <= 145000)
+            {
+                return 0;
             }
-            public double calculateTax() {
-                if (_housePrice <= 145000)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return 0.02 * (_housePrice-145000);
-                }
+            else
+            {
+                return 0.02 * (_housePrice - 145000);
             }
         }
+    }
 }

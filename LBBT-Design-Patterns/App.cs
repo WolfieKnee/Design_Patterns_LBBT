@@ -14,8 +14,7 @@ namespace LBBT_Design_Patterns
     {
         static void Main()
         {
-            Console.WriteLine("Hello from App.Main");
-            LBBTCalculator anLBBTCalculator =  new(0);
+            ITaxCalculator anLBBTCalculator =  new LBBTCalculator(235000);
             Console.WriteLine(anLBBTCalculator.calculateTax());
         }
     }
