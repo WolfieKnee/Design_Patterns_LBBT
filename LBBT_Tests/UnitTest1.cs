@@ -13,10 +13,10 @@ public class Tests
     public void Test_tax0(int price, int tax)
     {
         // Arrange
-        LBBTCalculator _anLBBTCalculator = new(price);
+        LBBTCalculator _anLBBTCalculator = new();
 
         // Act
-        double _actual = _anLBBTCalculator.calculateTax();
+        double _actual = _anLBBTCalculator.calculateTax(price);
 
         // Assert
         Assert.That(_actual, Is.EqualTo(tax));
@@ -28,10 +28,10 @@ public class Tests
     public void TestTax2Pc(int price, double tax)
     {
         // Arrange
-        LBBTCalculator _anLBBTCalculator = new(price);
+        LBBTCalculator _anLBBTCalculator = new();
 
         // Act
-        double _actual = _anLBBTCalculator.calculateTax();
+        double _actual = _anLBBTCalculator.calculateTax(price);
 
         // Assert
         Assert.That(_actual, Is.EqualTo(tax));

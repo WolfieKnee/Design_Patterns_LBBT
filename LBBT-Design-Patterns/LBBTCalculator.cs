@@ -9,12 +9,13 @@ namespace LBBT_Design_Patterns
     internal class LBBTCalculator : ITaxCalculator
     {
         private int _housePrice;
-        public LBBTCalculator(int price)
+        public LBBTCalculator()
+        {
+            //_housePrice = price;
+        }
+        public double calculateTax(int price)
         {
             _housePrice = price;
-        }
-        public double calculateTax()
-        {
             if (_housePrice <= 145000)
             {
                 return 0;
