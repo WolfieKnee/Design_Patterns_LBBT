@@ -14,24 +14,25 @@ namespace LBBT_Design_Patterns
 
         public LBBTCalculator()
         {
-            TaxBand _2PcTaxBand = new(0.02, 145000);
-            // this needs to be ordered greatest to least to work with iteration
+            TaxBand _2PcTaxBand = new(0.02, 145001, 250000);
             _TaxBands = new() { 
                 _2PcTaxBand,
             };
         }
 
-        public void applyTaxBands(int TaxableAmount)
+        public void applyTaxBands(int price)
         {
-            
+            int TaxableAmount = price;
+
+
             foreach (ITaxStrategy taxStrategy in _TaxBands)
                 {
-                    Console.WriteLine($"{taxStrategy.TaxRate}%");
-                if (TaxableAmount > taxStrategy.TaxThreshold) {
-                    _TotalTax += (TaxableAmount - taxStrategy.TaxThreshold) * taxStrategy.TaxRate;
-                    TaxableAmount -= taxStrategy.TaxThreshold;
-                }
-                    
+                _TotalTax += taxStrategy.ApplyTax(price);
+                //if (TaxableAmount > taxStrategy.LowerThreshold) {
+                //    _TotalTax += (TaxableAmount - taxStrategy.LowerThreshold) * taxStrategy.TaxRate;
+                //    TaxableAmount -= taxStrategy.LowerThreshold;
+                //}
+
                 }
         }
 
