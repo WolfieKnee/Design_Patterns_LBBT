@@ -9,10 +9,9 @@ namespace LBBT_Design_Patterns
     internal class BoundedTaxBand(double TaxRate, int LowerThreshold, int UpperThreshold) : ITaxStrategy
     {
         private double Tax;
-
-        public double TaxRate { get; set; } = TaxRate;
-        public int LowerThreshold { get; set; } = LowerThreshold;
-        public int UpperThreshold { get; set; } = UpperThreshold;
+        private double TaxRate { get; set; } = TaxRate;
+        private int LowerThreshold { get; set; } = LowerThreshold;
+        private int UpperThreshold { get; set; } = UpperThreshold;
 
         public int ApplyTax(int Price)
         {

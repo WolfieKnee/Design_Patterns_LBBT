@@ -4,8 +4,8 @@
     {
         private double Tax;
 
-        public double TaxRate { get; set; } = TaxRate;
-        public int LowerThreshold { get; set; } = LowerThreshold;
+        private double TaxRate { get; set; } = TaxRate;
+        private int LowerThreshold { get; set; } = LowerThreshold;
 
         public int ApplyTax(int Price)
         {

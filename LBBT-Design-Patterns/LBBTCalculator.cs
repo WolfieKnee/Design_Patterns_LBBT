@@ -25,7 +25,7 @@ namespace LBBT_Design_Patterns
             ];
         }
 
-        public void ApplyTaxBands(int price)
+        private void ApplyTaxBands(int price)
         {
             foreach (ITaxStrategy taxStrategy in TaxBands)
                 {
