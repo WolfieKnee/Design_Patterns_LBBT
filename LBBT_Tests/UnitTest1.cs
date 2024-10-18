@@ -38,4 +38,18 @@ public class Tests
         // Assert
         Assert.That(_actual, Is.EqualTo(tax));
     }
+
+    [Test]
+    [TestCase(250500, 2125)]
+    public void TestTax5Pc(int price, double tax)
+    {
+        // Arrange
+        LBBTCalculator _aTaxCalculator = new();
+
+        // Act
+        double _actual = _aTaxCalculator.CalculateTotalTax(price);
+
+        // Assert
+        Assert.That(_actual, Is.EqualTo(tax));
+    }
 }

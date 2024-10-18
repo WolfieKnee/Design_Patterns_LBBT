@@ -27,7 +27,6 @@ namespace LBBT_Design_Patterns
             else { 
                 Tax = (Price - LowerThreshold) * TaxRate;
                 return (int)Math.Ceiling(Tax);
-
             }
         }
     }
