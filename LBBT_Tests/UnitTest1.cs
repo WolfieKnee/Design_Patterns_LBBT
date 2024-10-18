@@ -41,7 +41,23 @@ public class Tests
 
     [Test]
     [TestCase(250500, 2125)]
+    [TestCase(325000, 5850)]
     public void TestTax5Pc(int price, double tax)
+    {
+        // Arrange
+        LBBTCalculator _aTaxCalculator = new();
+
+        // Act
+        double _actual = _aTaxCalculator.CalculateTotalTax(price);
+
+        // Assert
+        Assert.That(_actual, Is.EqualTo(tax));
+    }
+
+    [Test]
+    [TestCase(325500, 5900)]
+    [TestCase(750000, 48350)]
+    public void TestTax10Pc(int price, double tax)
     {
         // Arrange
         LBBTCalculator _aTaxCalculator = new();

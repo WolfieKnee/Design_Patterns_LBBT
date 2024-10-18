@@ -15,10 +15,11 @@ namespace LBBT_Design_Patterns
         {
             TaxBand _2PcTaxBand = new(0.02, 145001, 250000);
             TaxBand _5PcTaxBand = new(0.05, 250001, 325000);
-
+            TaxBand _10PcTaxBand = new(0.10, 325001, 750000);
             TaxBands = [ 
                 _2PcTaxBand,
                 _5PcTaxBand,
+                _10PcTaxBand,
             ];
         }
 
