@@ -10,7 +10,7 @@ public class Tests
     [Test]
     [TestCase(0, 0)]
     [TestCase(145000, 0)]
-    public void Test_tax0(int price, int tax)
+    public void Test_0pcRate(int price, int tax)
     {
         // Arrange
         ITaxCalculator _aTaxCalculator = new LBBTCalculator();

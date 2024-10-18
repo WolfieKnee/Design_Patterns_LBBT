@@ -8,8 +8,8 @@ namespace LBBT_Design_Patterns
 {
     internal interface ITaxStrategy
     {
-        public Double TaxRate { get; }
+        double TaxRate { get; set; }
         // this is the threshold at which the rate applies
-        public int taxThreshold { get; }
+        int TaxThreshold { get; set; }
     }
 }

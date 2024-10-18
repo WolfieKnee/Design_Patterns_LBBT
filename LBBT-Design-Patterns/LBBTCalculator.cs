@@ -9,32 +9,29 @@ namespace LBBT_Design_Patterns
     internal class LBBTCalculator : ITaxCalculator
     {
         private int _housePrice;
-        private List<ITaxStrategy> _TaxStratgies { get; }
-        private _0pcTax _a0PcTax { get; }
-        private _2pcTax _a2PcTax { get; }
+        private List<ITaxStrategy> _TaxBands { get; }
         public double _TotalTax { get; private set; } = 0;
 
         public LBBTCalculator()
         {
-            _a0PcTax = new _0pcTax();
-            _a2PcTax = new _2pcTax();
-
+            TaxBand _2PcTaxBand = new(0.02, 145000);
+            TaxBand _0PcTaxBand = new(0, 0);
             // this needs to be ordered greatest to least to work with iteration
-            _TaxStratgies = new() { 
-                _a2PcTax,
-                _a0PcTax
+            _TaxBands = new() { 
+                _2PcTaxBand,
+                _0PcTaxBand
             };
         }
 
-        public void applyStrategies(int TaxableAmount)
+        public void applyTaxBands(int TaxableAmount)
         {
             
-            foreach (ITaxStrategy taxStrategy in _TaxStratgies)
+            foreach (ITaxStrategy taxStrategy in _TaxBands)
                 {
                     Console.WriteLine($"{taxStrategy.TaxRate}%");
-                if (TaxableAmount > taxStrategy.taxThreshold) {
-                    _TotalTax += (TaxableAmount - taxStrategy.taxThreshold) * taxStrategy.TaxRate;
-                    TaxableAmount -= taxStrategy.taxThreshold;
+                if (TaxableAmount > taxStrategy.TaxThreshold) {
+                    _TotalTax += (TaxableAmount - taxStrategy.TaxThreshold) * taxStrategy.TaxRate;
+                    TaxableAmount -= taxStrategy.TaxThreshold;
                 }
                     
                 }
@@ -42,7 +39,7 @@ namespace LBBT_Design_Patterns
 
         public int calculateTotalTax(int price)
         {
-            applyStrategies(price);
+            applyTaxBands(price);
             return (int)_TotalTax;
         }
     }
