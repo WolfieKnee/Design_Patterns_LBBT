@@ -13,13 +13,15 @@ namespace LBBT_Design_Patterns
 
         public LBBTCalculator()
         {
-            TaxBand _2PcTaxBand = new(0.02, 145001, 250000);
-            TaxBand _5PcTaxBand = new(0.05, 250001, 325000);
-            TaxBand _10PcTaxBand = new(0.10, 325001, 750000);
+            BoundedTaxBand _2PcTaxBand = new (0.02, 145001, 250000);
+            BoundedTaxBand _5PcTaxBand = new (0.05, 250001, 325000);
+            BoundedTaxBand _10PcTaxBand = new (0.10, 325001, 750000);
+            UnboundedTaxBand _12PcTaxBand = new (0.12, 750001);
             TaxBands = [ 
                 _2PcTaxBand,
                 _5PcTaxBand,
                 _10PcTaxBand,
+                _12PcTaxBand,
             ];
         }
 

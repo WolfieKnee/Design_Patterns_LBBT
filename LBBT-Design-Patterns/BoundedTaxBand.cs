@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LBBT_Design_Patterns
 {
-    internal class TaxBand(double TaxRate, int LowerThreshold, int UpperThreshold) : ITaxStrategy
+    internal class BoundedTaxBand(double TaxRate, int LowerThreshold, int UpperThreshold) : ITaxStrategy
     {
         private double Tax;
 
