@@ -15,11 +15,9 @@ namespace LBBT_Design_Patterns
         public LBBTCalculator()
         {
             TaxBand _2PcTaxBand = new(0.02, 145000);
-            TaxBand _0PcTaxBand = new(0, 0);
             // this needs to be ordered greatest to least to work with iteration
             _TaxBands = new() { 
                 _2PcTaxBand,
-                _0PcTaxBand
             };
         }
 
