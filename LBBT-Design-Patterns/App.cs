@@ -12,8 +12,8 @@ namespace LBBT_Design_Patterns
     
     internal class App
     {
-        private int _price;
-        private ITaxCalculator _taxCalculator;
+        private readonly int _price;
+        private readonly LBBTCalculator _taxCalculator;
 
         public App()
         {
@@ -29,7 +29,7 @@ namespace LBBT_Design_Patterns
         }
 
         private void Run() { 
-            Console.WriteLine("Tax on £"+ _price +" is "+_taxCalculator.calculateTotalTax(_price));
+            Console.WriteLine("Tax on £"+ _price +" is "+_taxCalculator.CalculateTotalTax(_price));
         }
     }
 }

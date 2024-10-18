@@ -6,40 +6,31 @@ using System.Threading.Tasks;
 
 namespace LBBT_Design_Patterns
 {
-    internal class LBBTCalculator : ITaxCalculator
+    internal class LBBTCalculator
     {
-        private int _housePrice;
-        private List<ITaxStrategy> _TaxBands { get; }
-        public double _TotalTax { get; private set; } = 0;
+        private List<ITaxStrategy> TaxBands { get; }
+        public int TotalTax { get; private set; } = 0;
 
         public LBBTCalculator()
         {
             TaxBand _2PcTaxBand = new(0.02, 145001, 250000);
-            _TaxBands = new() { 
+            TaxBands = [ 
                 _2PcTaxBand,
-            };
+            ];
         }
 
-        public void applyTaxBands(int price)
+        public void ApplyTaxBands(int price)
         {
-            int TaxableAmount = price;
-
-
-            foreach (ITaxStrategy taxStrategy in _TaxBands)
+            foreach (ITaxStrategy taxStrategy in TaxBands)
                 {
-                _TotalTax += taxStrategy.ApplyTax(price);
-                //if (TaxableAmount > taxStrategy.LowerThreshold) {
-                //    _TotalTax += (TaxableAmount - taxStrategy.LowerThreshold) * taxStrategy.TaxRate;
-                //    TaxableAmount -= taxStrategy.LowerThreshold;
-                //}
-
+                TotalTax += taxStrategy.ApplyTax(price);
                 }
         }
 
-        public int calculateTotalTax(int price)
+        public int CalculateTotalTax(int price)
         {
-            applyTaxBands(price);
-            return (int)_TotalTax;
+            ApplyTaxBands(price);
+            return (int)TotalTax;
         }
     }
 }
