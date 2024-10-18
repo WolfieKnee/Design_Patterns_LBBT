@@ -10,6 +10,7 @@ public class Tests
     [Test]
     [TestCase(0, 0)]
     [TestCase(145000, 0)]
+    [TestCase(145050, 1)]
     public void Test_0pcRate(int price, int tax)
     {
         // Arrange
@@ -25,6 +26,7 @@ public class Tests
 
     [Test]
     [TestCase(235000, 1800)]
+    [TestCase(250000, 2100)]
     public void TestTax2Pc(int price, double tax)
     {
         // Arrange
