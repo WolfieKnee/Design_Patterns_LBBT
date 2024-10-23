@@ -1,4 +1,6 @@
-﻿namespace LBBT_Design_Patterns
+﻿using System.Collections.Concurrent;
+
+namespace LBBT_Design_Patterns
 {
     public class UnboundedTaxBand(double TaxRate, int LowerThreshold) : ITaxStrategy
     {
@@ -7,16 +9,17 @@
         private double TaxRate { get; set; } = TaxRate;
         private int LowerThreshold { get; set; } = LowerThreshold;
 
-        public int ApplyTax(int Price)
+        public void ApplyTax(int Price, ConcurrentBag<int> taxCalculationResults)
         {
             if (Price < LowerThreshold)
             {
-                return 0;
+                taxCalculationResults.Add(0);
             }
             else
             {
                 Tax = (Price - LowerThreshold) * TaxRate;
-                return (int)Math.Ceiling(Tax);
+                int TaxInt = (int)Math.Ceiling(Tax);
+                taxCalculationResults.Add(TaxInt);
             }
         }
     }

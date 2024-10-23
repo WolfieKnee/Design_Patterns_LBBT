@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +14,23 @@ namespace LBBT_Design_Patterns
         private int LowerThreshold { get; set; } = LowerThreshold;
         private int UpperThreshold { get; set; } = UpperThreshold;
 
-        public int ApplyTax(int Price)
+        public void ApplyTax(int Price, ConcurrentBag<int> taxCalculationResults)
         {
-            if (Price < LowerThreshold) {
-                return 0;
-            }
-            if (Price > UpperThreshold)
+            if (Price < LowerThreshold)
+            {
+                taxCalculationResults.Add(0);
+            } else if (Price > UpperThreshold)
             {
                 Tax = (UpperThreshold - LowerThreshold) * TaxRate;
-                return (int)Math.Ceiling(Tax);
+                int TaxInt = (int)Math.Ceiling(Tax);
+                taxCalculationResults.Add(TaxInt);
             }
             else { 
                 Tax = (Price - LowerThreshold) * TaxRate;
-                return (int)Math.Ceiling(Tax);
+                int TaxInt = (int)Math.Ceiling(Tax);
+                taxCalculationResults.Add(TaxInt);
             }
         }
+
     }
 }
