@@ -12,8 +12,8 @@ namespace LBBT_Design_Patterns;
 public class LBBTCalculator(IList<ITaxStrategy>? taxStrategies = null) : ITaxCalculator
 {
     private readonly IList<ITaxStrategy> _taxBands = taxStrategies ?? CreateDefaultStrategies();
-    private readonly ConcurrentBag<int> _taxCalculationResults = [];
-    private readonly List<Thread> _threadStore = [];
+    private ConcurrentBag<int> _taxCalculationResults = [];
+    private List<Thread> _threadStore = [];
 
     private static IList<ITaxStrategy> CreateDefaultStrategies()
     {
@@ -50,7 +50,12 @@ public class LBBTCalculator(IList<ITaxStrategy>? taxStrategies = null) : ITaxCal
             thread.Join(millisecondsTimeout: 1000);
         }
 
-        return _taxCalculationResults.Sum();
+        var summedResults = _taxCalculationResults.Sum();
+
+        _threadStore = [];
+        _taxCalculationResults = [];
+
+        return summedResults;
     }
 
     public int CalculateTotalTax(int price)
