@@ -1,7 +1,4 @@
-using System.ComponentModel;
-using System.Diagnostics;
 using LBBT_Design_Patterns;
-using NUnit.Framework;
 
 namespace LBBT_Tests;
 
@@ -13,14 +10,7 @@ public class Tests
     [TestCase(145050, 1)]
     public void Test_0pcRate(int price, int tax)
     {
-        // Arrange
-        LBBTCalculator _aTaxCalculator = new();
-
-        // Act
-        double _actual = _aTaxCalculator.CalculateTotalTax(price);
-
-        // Assert
-        Assert.That(_actual, Is.EqualTo(tax));
+        DoTest(price, tax, nameof(Test_0pcRate));
     }
 
 
@@ -29,14 +19,7 @@ public class Tests
     [TestCase(250000, 2100)]
     public void TestTax2Pc(int price, double tax)
     {
-        // Arrange
-        LBBTCalculator _aTaxCalculator = new();
-
-        // Act
-        double _actual = _aTaxCalculator.CalculateTotalTax(price);
-
-        // Assert
-        Assert.That(_actual, Is.EqualTo(tax));
+        DoTest(price, tax, nameof(TestTax2Pc));
     }
 
     [Test]
@@ -44,14 +27,7 @@ public class Tests
     [TestCase(325000, 5850)]
     public void TestTax5Pc(int price, double tax)
     {
-        // Arrange
-        LBBTCalculator _aTaxCalculator = new();
-
-        // Act
-        double _actual = _aTaxCalculator.CalculateTotalTax(price);
-
-        // Assert
-        Assert.That(_actual, Is.EqualTo(tax));
+        DoTest(price, tax, nameof(TestTax5Pc));
     }
 
     [Test]
@@ -59,14 +35,7 @@ public class Tests
     [TestCase(750000, 48350)]
     public void TestTax10Pc(int price, double tax)
     {
-        // Arrange
-        LBBTCalculator _aTaxCalculator = new();
-
-        // Act
-        double _actual = _aTaxCalculator.CalculateTotalTax(price);
-
-        // Assert
-        Assert.That(_actual, Is.EqualTo(tax));
+        DoTest(price, tax, nameof(TestTax10Pc));
     }
 
     [Test]
@@ -74,13 +43,20 @@ public class Tests
     [TestCase(1000000, 78350)]
     public void TestTax12Pc(int price, double tax)
     {
-        // Arrange
-        LBBTCalculator _aTaxCalculator = new();
+        DoTest(price, tax, nameof(TestTax12Pc));
+    }
 
-        // Act
-        double _actual = _aTaxCalculator.CalculateTotalTax(price);
+    private void DoTest(int price, double expected, string testName)
+    {
+        var actual = _lbbtCalculator.CalculateTotalTax(price);
+        Assert.That(actual, Is.EqualTo(expected), testName);
+    }
 
-        // Assert
-        Assert.That(_actual, Is.EqualTo(tax));
+    private ITaxCalculator _lbbtCalculator;
+
+    [SetUp]
+    public void Setup()
+    {
+        _lbbtCalculator = new LBBTCalculator();
     }
 }

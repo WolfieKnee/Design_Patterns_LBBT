@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
-namespace LBBT_Design_Patterns
+namespace LBBT_Design_Patterns;
+
+public interface ITaxStrategy
 {
-    internal interface ITaxStrategy
-    {
-        public void ApplyTax(int Price, ConcurrentBag<int> taxCalculationResults);
-    }
+    /// <summary>
+    ///     Calculates tax on <paramref name="price" /> using the rules for this instance and
+    ///     stores results in <paramref name="taxCalculationResults" />
+    /// </summary>
+    public void ApplyTax(int price, ConcurrentBag<int> taxCalculationResults);
 }
