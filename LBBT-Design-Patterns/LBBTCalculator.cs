@@ -1,60 +1,66 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
-namespace LBBT_Design_Patterns
+namespace LBBT_Design_Patterns;
+
+/// <summary>
+///   Tax calculator using tax bands with rates.
+/// </summary>
+/// <param name="taxStrategies">
+///   Tax strategies to use in calculations,
+///   or will use default strategies specified in <see cref="CreateDefaultStrategies"/> if null.
+/// </param>
+public class LBBTCalculator(IList<ITaxStrategy>? taxStrategies = null) : ITaxCalculator
 {
-    internal class LBBTCalculator
+    private readonly IList<ITaxStrategy> _taxBands = taxStrategies ?? CreateDefaultStrategies();
+    private ConcurrentBag<int> _taxCalculationResults = [];
+    private List<Thread> _threadStore = [];
+
+    private static IList<ITaxStrategy> CreateDefaultStrategies()
     {
-        private List<ITaxStrategy> TaxBands { get; }
-        public int TotalTax { get; private set; } = 0;
-        private List<Thread> threadStore = [];
-        private ConcurrentBag<int> taxCalculationResults = new ConcurrentBag<int>();
-        public LBBTCalculator()
+        TaxBand taxBand2Pc = new(0.02, 145001, 250000);
+        TaxBand taxBand5Pc = new(0.05, 250001, 325000);
+        TaxBand taxBand10Pc = new(0.10, 325001, 750000);
+        TaxBand taxBand12Pc = new(0.12, 750001);
+        return
+        [
+            taxBand2Pc,
+            taxBand5Pc,
+            taxBand10Pc,
+            taxBand12Pc
+        ];
+    }
+
+    private int ApplyTaxBands(int price)
+    {
+        // Create a new thread for each taxStrategy
+        foreach (var taxBand in _taxBands)
         {
-            BoundedTaxBand _2PcTaxBand = new (0.02, 145001, 250000);
-            BoundedTaxBand _5PcTaxBand = new (0.05, 250001, 325000);
-            BoundedTaxBand _10PcTaxBand = new (0.10, 325001, 750000);
-            UnboundedTaxBand _12PcTaxBand = new (0.12, 750001);
-            TaxBands = [
-                _2PcTaxBand,
-                _5PcTaxBand,
-                _10PcTaxBand,
-                _12PcTaxBand,
-            ];
+            _threadStore.Add(new Thread(() => taxBand.ApplyTax(price, _taxCalculationResults)));
         }
 
-        private void ApplyTaxBands(int price)
+        // Start all the threads
+        foreach (var thread in _threadStore)
         {
-            // Create a new thread for each taxStrategy
-            foreach (ITaxStrategy TaxBand in TaxBands)
-                {
-                threadStore.Add(new Thread(() => TaxBand.ApplyTax(price, taxCalculationResults)));
-                }
-
-            // Start all the threads
-            foreach (Thread thread in threadStore)
-            {
-                thread.Start();
-            }
-
-            // bring the threads back here after 1s - this is blocking
-            foreach (var thread in threadStore)
-            {
-                thread.Join(1000);
-            }
-
-            TotalTax = taxCalculationResults.Sum();
-
+            thread.Start();
         }
 
-        public int CalculateTotalTax(int price)
+        // Bring the threads back here after 1s - this is blocking
+        foreach (var thread in _threadStore)
         {
-            ApplyTaxBands(price);
-            return TotalTax;
+            thread.Join(millisecondsTimeout: 1000);
         }
+
+        var summedResults = _taxCalculationResults.Sum();
+
+        _threadStore = [];
+        _taxCalculationResults = [];
+
+        return summedResults;
+    }
+
+    public int CalculateTotalTax(int price)
+    {
+        var totalTax = ApplyTaxBands(price);
+        return totalTax;
     }
 }
